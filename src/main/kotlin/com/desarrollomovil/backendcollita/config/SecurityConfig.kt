@@ -19,16 +19,9 @@ class SecurityConfig {
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .csrf { it.disable() }
-            .cors { it.configure(http) }
+            .cors { it.disable() }
             .authorizeHttpRequests { auth ->
-                auth
-                    .requestMatchers("/api/auth/login").permitAll()
-                    .requestMatchers("/api/users/register").permitAll()
-                    .requestMatchers("/api/users/email/**").permitAll()
-                    .requestMatchers("/api/trabajadores/categoria/**").permitAll()
-                    .requestMatchers("/api/trabajadores/disponibles").permitAll()
-                    .requestMatchers("/api/tickets/estado/**").permitAll()
-                    .anyRequest().authenticated()
+                auth.anyRequest().permitAll()
             }
             .httpBasic { it.disable() }
             .formLogin { it.disable() }
