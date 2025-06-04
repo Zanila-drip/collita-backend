@@ -5,10 +5,12 @@ import com.desarrollomovil.backendcollita.User
 import com.desarrollomovil.backendcollita.services.AuthService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.slf4j.LoggerFactory
 
 @RestController
 @RequestMapping("/api/auth")
 class AuthController(private val authService: AuthService) {
+    private val logger = LoggerFactory.getLogger(AuthController::class.java)
 
     @PostMapping("/login")
     fun login(@RequestBody loginRequest: LoginRequestDTO): ResponseEntity<LoginResponseDTO> {
@@ -17,9 +19,13 @@ class AuthController(private val authService: AuthService) {
     }
 
     @PostMapping("/register")
-    fun register(@RequestBody registrationDTO: UserRegistrationDTO): ResponseEntity<UserResponseDTO> {
-        val user = authService.register(registrationDTO)
-        return ResponseEntity.ok(user.toResponseDTO())
+    fun register(@RequestBody registrationDTO: UserRegistrationDTO): ResponseEntity<LoginResponseDTO> {
+        logger.info("Iniciando registro para usuario: ${registrationDTO.username}")
+        val (token, user) = authService.register(registrationDTO)
+        logger.info("Registro exitoso. Token generado: $token")
+        val response = LoginResponseDTO(token, user.toResponseDTO())
+        logger.info("Respuesta de registro: $response")
+        return ResponseEntity.ok(response)
     }
 
     @PostMapping("/logout")
