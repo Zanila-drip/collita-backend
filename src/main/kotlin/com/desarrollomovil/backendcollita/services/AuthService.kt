@@ -1,6 +1,7 @@
 package com.desarrollomovil.backendcollita.services
 
-import com.desarrollomovil.backendcollita.models.User
+import com.desarrollomovil.backendcollita.dto.*
+import com.desarrollomovil.backendcollita.User
 import com.desarrollomovil.backendcollita.repositories.UserRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -17,16 +18,12 @@ class AuthService(
         val user = userRepository.findByUserUsername(username)
             .orElseThrow { IllegalArgumentException("Usuario no encontrado") }
 
-        if (!user.activo) {
-            throw IllegalArgumentException("Usuario inactivo")
-        }
-
         if (!passwordEncoder.matches(password, user.userPassword)) {
             throw IllegalArgumentException("Contraseña incorrecta")
         }
 
-        val token = generateToken()
-        activeTokens[token] = username
+        // Aquí deberías generar un token JWT real
+        val token = "dummy-token-${System.currentTimeMillis()}"
         return Pair(token, user)
     }
 
@@ -42,7 +39,17 @@ class AuthService(
         return activeTokens[token]
     }
 
-    private fun generateToken(): String {
-        return UUID.randomUUID().toString()
+    fun register(registrationDTO: UserRegistrationDTO): User {
+        val user = User(
+            userUsername = registrationDTO.username,
+            email = registrationDTO.email,
+            userPassword = registrationDTO.password,
+            nombre = registrationDTO.nombre,
+            apellidoPaterno = registrationDTO.apellidoPaterno,
+            apellidoMaterno = registrationDTO.apellidoMaterno,
+            curp = registrationDTO.curp,
+            telefono = registrationDTO.telefono
+        )
+        return userRepository.save(user)
     }
 } 

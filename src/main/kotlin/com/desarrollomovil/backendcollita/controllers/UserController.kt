@@ -1,7 +1,7 @@
 package com.desarrollomovil.backendcollita.controllers
 
 import com.desarrollomovil.backendcollita.dto.*
-import com.desarrollomovil.backendcollita.models.User
+import com.desarrollomovil.backendcollita.User
 import com.desarrollomovil.backendcollita.services.UserService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
@@ -18,7 +18,9 @@ class UserController(private val userService: UserService) {
                 email = registrationDTO.email,
                 userPassword = registrationDTO.password,
                 nombre = registrationDTO.nombre,
-                apellido = registrationDTO.apellido,
+                apellidoPaterno = registrationDTO.apellidoPaterno,
+                apellidoMaterno = registrationDTO.apellidoMaterno,
+                curp = registrationDTO.curp,
                 telefono = registrationDTO.telefono
             )
             val createdUser = userService.createUser(user)
@@ -53,7 +55,9 @@ class UserController(private val userService: UserService) {
                 email = updatedUser.email,
                 userPassword = updatedUser.password,
                 nombre = updatedUser.nombre,
-                apellido = updatedUser.apellido,
+                apellidoPaterno = updatedUser.apellidoPaterno,
+                apellidoMaterno = updatedUser.apellidoMaterno,
+                curp = updatedUser.curp,
                 telefono = updatedUser.telefono
             )
             val updated = userService.updateUser(id, user)
@@ -79,7 +83,9 @@ fun User.toResponseDTO() = UserResponseDTO(
     username = userUsername,
     email = email,
     nombre = nombre,
-    apellido = apellido,
+    apellidoPaterno = apellidoPaterno,
+    apellidoMaterno = apellidoMaterno,
+    curp = curp,
     telefono = telefono,
     rol = rol
 ) 

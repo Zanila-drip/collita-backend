@@ -5,7 +5,9 @@ data class UserRegistrationDTO(
     val email: String,
     val password: String,
     val nombre: String,
-    val apellido: String,
+    val apellidoPaterno: String,
+    val apellidoMaterno: String,
+    val curp: String,
     val telefono: String
 )
 
@@ -14,7 +16,9 @@ data class UserResponseDTO(
     val username: String,
     val email: String,
     val nombre: String,
-    val apellido: String,
+    val apellidoPaterno: String,
+    val apellidoMaterno: String,
+    val curp: String,
     val telefono: String,
     val rol: String
 )

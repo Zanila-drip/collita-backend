@@ -6,10 +6,13 @@ import org.springframework.data.mongodb.core.mapping.Document
 @Document(collection = "users")
 data class User(
     @Id val id: String? = null,
-    val curp: String? = null,
-    val nombre: String? = null,
-    val apellidoPaterno: String? = null,
-    val apellidoMaterno: String? = null,
-    val telefono: String? = null,
-    val contrasena: String? = null
+    var userUsername: String,
+    var email: String,
+    var userPassword: String,
+    var nombre: String,
+    var apellidoPaterno: String,
+    var apellidoMaterno: String,
+    var curp: String,
+    var telefono: String,
+    var rol: String = "USER"
 ) 
